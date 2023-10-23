@@ -15,7 +15,11 @@ public class LinearEquation {
     }
 
     public double slope() {
-        return roundToHundredth( (y2 - y1 * 1.0) / (x2 - x1 * 1.0));
+        if ((x2 - x1) == 0) {
+            return 0;
+        } else {
+            return roundToHundredth( (y2 - y1 * 1.0) / (x2 - x1 * 1.0));
+        }
     }
 
     public double yIntercept() {
@@ -57,11 +61,15 @@ public class LinearEquation {
     }
 
     public String lineInfo() {
-        return "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n" +
-               "The equation of the line between these points is:" + equation() + "\n" +
-               "The slope of this line is: " + slope() + "\n" +
-               "The y-intercept of this line is: " + yIntercept() + "\n" +
-               "The distance between these points is " + distance();
+        String info = "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n" +
+               "The equation of the line between these points is:" + equation() + "\n";
+        if ((x2 - x1) == 0) {
+            info += "The slope of this line is: N/A" + "\n" + "The y-intercept of this line is: N/A" + "\n";
+        } else {
+            info += "The slope of this line is: " + slope() + "\n" + "The y-intercept of this line is: " + yIntercept() + "\n";
+        }
+        info += "The distance between these points is " + distance();
+        return info;
     }
 
     private double roundToHundredth(double toRound) {
