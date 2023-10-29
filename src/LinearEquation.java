@@ -3,7 +3,7 @@ public class LinearEquation {
     int x2;
     int y1;
     int y2;
-    public LinearEquation(int x1, int x2, int y1, int y2) {
+    public LinearEquation(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
@@ -39,11 +39,15 @@ public class LinearEquation {
         } else if (slope() == -1) {
             equation += "-x";
         } else if (slope() % 1 == 0) {
-            equation += (y2 - y1) + "/" + (x2 - x1) + "x";
+            equation += (int) slope() + "x";
         } else if (x2 - x1 < 0 && y2 - y1 < 0) {
             equation += ((y2 - y1) * -1) + "/" + ((x2 - x1) * -1) + "x";
         } else if (x2 - x1 < 0) {
             equation += "-" + (y2 - y1) + "/" + ((x2 - x1) * -1) + "x";
+        } else if (y2 - y1 < 0) {
+            equation += "-" + ((y2 - y1) * -1) + "/" + (x2 - x1) + "x";
+        } else {
+            equation += (y2 - y1) + "/" + (x2 - x1) + "x";
         }
         if (yIntercept() == 0) {
             equation += "";
@@ -57,12 +61,18 @@ public class LinearEquation {
     }
 
     public String coordinateForX(double x) {
+        if (x1 == x2) {
+            return "N/A";
+        }
+        if (y1 == y2) {
+            return "(" + x + ", " + y1 + ")";
+        }
         return "(" + x + ", " + (Math.round((slope() * x + yIntercept()) * 100.0) / 100.0) + ")";
     }
 
     public String lineInfo() {
         String info = "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ")\n" +
-               "The equation of the line between these points is:" + equation() + "\n";
+               "The equation of the line between these points is: " + equation() + "\n";
         if ((x2 - x1) == 0) {
             info += "The slope of this line is: N/A" + "\n" + "The y-intercept of this line is: N/A" + "\n";
         } else {
